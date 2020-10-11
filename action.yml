@@ -1,0 +1,15 @@
+name: 'Extract docker dns name'
+description: 'Currently only supports Traefik labels (in docker-compose.yml)'
+outputs:
+  dns-name: 
+    description: "The hostname as extracted"
+    value: ${{ steps.extract.outputs.dns-name }}
+runs:
+  using: "composite"
+  steps: 
+    - id: extract
+      name: Extract dns name from docker-compose.yml
+      shell: bash
+      run: |
+        echo -n '::set-output name=dns-name::'
+        sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
