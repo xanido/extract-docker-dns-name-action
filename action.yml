@@ -1,5 +1,5 @@
 name: 'Extract docker dns name'
-description: 'Currently only supports Traefik labels (in docker-compose.yml)'
+description: 'Currently only supports Traefik labels (in docker-compose.prod.yml or docker-compose.yml)'
 outputs:
   dns-name: 
     description: "The hostname as extracted"
@@ -12,4 +12,7 @@ runs:
       shell: bash
       run: |
         echo -n '::set-output name=dns-name::'
-        sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
+        # check the docker-compose.prod.yml file for a Host name first
+        (grep "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) \
+        # fall back to docker-compose.yml
+        || sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
