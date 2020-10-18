@@ -11,7 +11,13 @@ runs:
       name: Extract dns name from docker-compose.yml
       shell: bash
       run: |
-        echo -n '::set-output name=dns-name::'
+        echo -n '::set-output name=dns-name::' &&
+        # check the docker-compose.prod.yml file for a Host name first
+        (grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) ||
+        # fall back to docker-compose.yml
+        sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
+
+        echo "DEBUG" &&
         # check the docker-compose.prod.yml file for a Host name first
         (grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) ||
         # fall back to docker-compose.yml
