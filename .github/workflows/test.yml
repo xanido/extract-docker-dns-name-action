@@ -1,0 +1,28 @@
+name: Tests
+
+on: [push]
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - id: test-no-prod
+      name: test/no-prod
+      uses: ./
+      with:
+        workdir: ./test/no-prod/
+    - name: test/no-prod assert
+      run: |
+        [ "${{ steps.test-no-prod.outputs.dns-name }}" == 'foo.com' ]
+
+    - id: test-prod
+      name: test/prod
+      uses: ./
+      with:
+        workdir: ./test/prod/
+    - name: test/prod assert
+      run: |
+        [ '${{ steps.test-prod.outputs.dns-name }}' == 'prod.foo.com' ]
