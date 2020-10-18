@@ -12,10 +12,10 @@ runs:
       shell: bash
       run: |
         echo -n '::set-output name=dns-name::' &&
-        (grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) ||
+        grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml ||
         sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
 
         echo ""
         echo "DEBUG" &&
-        (grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) ||
+        grep -q "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml ||
         sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
