@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: ./
+      with:
+        workdir: ./test/no-prod
+      id: test-no-prod
+    - run: |
+        [ "${{ steps.test-no-prod.outputs.dns-name }}" == 'foo.bar.com' ]
+
+    - uses: ./
+      with:
+        workdir: ./test/prod
+      id: test-prod
+    - run: |
+        [ '${{ steps.test-prod.outputs.dns-name }}' == 'foo.bar.com' ]
