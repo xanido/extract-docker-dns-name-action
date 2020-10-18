@@ -13,6 +13,6 @@ runs:
       run: |
         echo -n '::set-output name=dns-name::'
         # check the docker-compose.prod.yml file for a Host name first
-        (grep "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) \
+        (grep "=Host(" docker-compose.prod.yml && sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.prod.yml) ||
         # fall back to docker-compose.yml
-        || sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
+        sed -n 's/.*Host(\`\(.*\)\`.*/\1/p' < docker-compose.yml
