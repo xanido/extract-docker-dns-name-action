@@ -2,4 +2,4 @@ version: '3.0'
 services:
   my_app:
     labels:
-      - "traefik.my_app.rule=Host(`foo.bar.com`)"
+      - "traefik.my_app.rule=Host(`prod.foo.com`)"

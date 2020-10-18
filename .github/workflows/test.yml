@@ -14,13 +14,15 @@ jobs:
       uses: ./
       with:
         workdir: ./test/no-prod/
-    - run: |
-        [ "${{ steps.test-no-prod.outputs.dns-name }}" == 'foo.bar.com' ]
+    - name: test/no-prod assert
+      run: |
+        [ "${{ steps.test-no-prod.outputs.dns-name }}" == 'foo.com' ]
 
     - id: test-prod
       name: test/prod
       uses: ./
       with:
         workdir: ./test/prod/
-    - run: |
-        [ '${{ steps.test-prod.outputs.dns-name }}' == 'foo.bar.com' ]
+    - name: test/prod assert
+      run: |
+        [ '${{ steps.test-prod.outputs.dns-name }}' == 'prod.foo.com' ]

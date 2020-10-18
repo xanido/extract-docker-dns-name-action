@@ -3,4 +3,4 @@ services:
   my_app:
     labels:
       - "traefik.enable=true"
-      - "traefik.my_app.rule=Host(`foo.bar.com`)"
+      - "traefik.my_app.rule=Host(`foo.com`)"
